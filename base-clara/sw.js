@@ -1,6 +1,6 @@
 // Guarda os arquivos do app no aparelho para ele abrir sem internet.
 // Ao mudar qualquer arquivo, suba a versão para o navegador baixar de novo.
-const CACHE = "base-clara-v1.1";
+const CACHE = "base-clara-v1.2";
 
 const FILES = [
   "./",

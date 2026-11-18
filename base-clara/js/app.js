@@ -610,22 +610,73 @@
     });
   }
 
-  // Botão "Instalar" aparece só quando o navegador oferece (Chrome, Edge, Android).
+  // Instalação como app.
+  // Chrome, Edge e Android oferecem o evento beforeinstallprompt, então dá para ter um botão.
+  // No iPhone não existe esse evento: a única forma é Compartilhar > Adicionar à Tela de Início,
+  // então mostramos o passo a passo num aviso.
   let installPrompt = null;
+  const BANNER_KEY = "baseClara.avisoInstalarFechado";
+
+  const isIOS = () =>
+    /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+    (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1); // iPad se apresenta como Mac
+
+  const isInstalled = () =>
+    window.matchMedia("(display-mode: standalone)").matches || navigator.standalone === true;
+
+  function bannerWasClosed() {
+    try { return localStorage.getItem(BANNER_KEY) === "1"; } catch (error) { return false; }
+  }
+
+  function showBanner(html, withButton) {
+    if (bannerWasClosed()) return;
+    $("installBannerText").innerHTML = html;
+    $("installBannerButton").hidden = !withButton;
+    $("installBanner").hidden = false;
+    document.body.classList.add("has-banner");
+  }
+
+  function hideBanner(remember) {
+    $("installBanner").hidden = true;
+    document.body.classList.remove("has-banner");
+    if (remember) {
+      try { localStorage.setItem(BANNER_KEY, "1"); } catch (error) { /* modo privado: tudo bem */ }
+    }
+  }
+
+  async function askToInstall() {
+    if (!installPrompt) return;
+    installPrompt.prompt();
+    await installPrompt.userChoice;
+    installPrompt = null;
+    $("installButton").hidden = true;
+    hideBanner(false);
+  }
+
   function setupInstall() {
+    if (isInstalled()) {
+      // Já está aberto como app: não faz sentido pedir para instalar.
+      $("instalar").hidden = true;
+    } else if (isIOS()) {
+      $("iosInstallLine").classList.add("is-current");
+      showBanner($("iosSteps").innerHTML, false);
+    }
+
     window.addEventListener("beforeinstallprompt", (event) => {
       event.preventDefault();
       installPrompt = event;
       $("installButton").hidden = false;
+      showBanner("<strong>Base Clara pode virar app</strong> no seu aparelho, e funciona sem internet.", true);
     });
-    $("installButton").addEventListener("click", async () => {
-      if (!installPrompt) return;
-      installPrompt.prompt();
-      await installPrompt.userChoice;
-      installPrompt = null;
-      $("installButton").hidden = true;
+    window.addEventListener("appinstalled", () => {
+      hideBanner(true);
+      $("instalar").hidden = true;
+      toast("Base Clara instalado");
     });
-    window.addEventListener("appinstalled", () => toast("Base Clara instalado"));
+
+    $("installButton").addEventListener("click", askToInstall);
+    $("installBannerButton").addEventListener("click", askToInstall);
+    $("installBannerClose").addEventListener("click", () => hideBanner(true));
 
     // O service worker só funciona via http(s); aberto direto do arquivo, é ignorado.
     if ("serviceWorker" in navigator && location.protocol.startsWith("http")) {

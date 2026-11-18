@@ -297,7 +297,7 @@
             <strong>Instale como app, de graça.</strong> Depois de instalado, abre direto da tela inicial, mesmo offline.
             <ul>
               <li><strong>Android, Windows, Linux e Mac (Chrome ou Edge):</strong> use o botão abaixo ou o ícone de instalar na barra de endereço.</li>
-              <li><strong>iPhone e iPad (Safari):</strong> toque em Compartilhar e depois em Adicionar à Tela de Início.</li>
+              <li id="iosInstallLine"><strong>iPhone e iPad (Safari ou Chrome):</strong> toque em <svg class="share-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="ícone Compartilhar"><path d="M8 7l4-4 4 4"/><path d="M12 3v12"/><path d="M6 11H5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-8a1 1 0 0 0-1-1h-1"/></svg> Compartilhar, role o menu e toque em Adicionar à Tela de Início. Não existe botão de download no iPhone: a Apple só permite instalar por esse menu.</li>
               <li><strong>Mac (Safari):</strong> menu Arquivo, Adicionar ao Dock.</li>
             </ul>
             <button class="action-button" type="button" id="installButton" hidden>Instalar Base Clara</button>
@@ -309,9 +309,17 @@
   <footer>
     <div class="shell footer-line">
       <span>Base Clara, feito por <a href="https://www.linkedin.com/in/willian-barbosa-de-andrade-31a068226" target="_blank" rel="noopener">Willian Barbosa</a> · <a href="https://github.com/willianbarbosadeandrade/network-labs" target="_blank" rel="noopener">código no GitHub</a></span>
-      <span>Versão 1.1 · decimal, binário e hexadecimal</span>
+      <span>Versão 1.2 · decimal, binário e hexadecimal</span>
     </div>
   </footer>
+  <div class="install-banner" id="installBanner" role="region" aria-label="Instalar o app" hidden>
+    <div class="install-banner-text" id="installBannerText"></div>
+    <button class="action-button" type="button" id="installBannerButton" hidden>Instalar</button>
+    <button class="banner-close" type="button" id="installBannerClose" aria-label="Fechar aviso">×</button>
+  </div>
+  <template id="iosSteps">
+    <strong>Instale como app:</strong> toque em <svg class="share-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="ícone Compartilhar"><path d="M8 7l4-4 4 4"/><path d="M12 3v12"/><path d="M6 11H5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-8a1 1 0 0 0-1-1h-1"/></svg> Compartilhar e depois em <strong>Adicionar à Tela de Início</strong>.
+  </template>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
   <script src="js/conversao.js"></script>
   <script src="js/app.js"></script>
