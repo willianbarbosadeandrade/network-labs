@@ -533,3 +533,14 @@ body.has-banner footer { padding-bottom: 7rem; }
   .content-section { padding: 2rem 0; break-inside: avoid; }
 }
 .install-box[hidden] { display: none; }
+
+/* No celular os 8 bits de um byte cabem inteiros na tela, sem rolar */
+@media (max-width: 640px) {
+  .bit-scroll { --bit: clamp(26px, calc((100vw - 96px) / 8.5), 44px); }
+  .bit-rail, .nibble-strip { gap: 3px; }
+  .bit-column { width: var(--bit); flex: 0 0 var(--bit); }
+  .bit-button { width: calc(var(--bit) - 2px); height: 46px; border-radius: 10px; font-size: 1rem; }
+  .bit-power { font-size: .62rem; }
+  .bit-weight { font-size: .58rem; }
+  .nibble-card { width: calc(var(--bit) * 4 + 9px); flex-basis: calc(var(--bit) * 4 + 9px); padding: .55rem .3rem; font-size: .8rem; }
+}
