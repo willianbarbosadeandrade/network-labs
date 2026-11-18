@@ -6,6 +6,8 @@ Conversor e laboratório de bases numéricas: **decimal, binário e hexadecimal*
 
 Gratuito, funciona offline e pode ser instalado no celular ou no computador.
 
+![Base Clara no PC e no celular](docs/preview.jpg)
+
 ## Por que fiz
 
 Estudando a trilha da Cisco Networking Academy, percebi que muita dúvida de rede começa antes do protocolo: por que um octeto vai até 255, como uma máscara vira bits, por que o MAC é escrito em hexadecimal. Eu queria uma ferramenta que mostrasse a conversão acontecendo, e não só o resultado.
