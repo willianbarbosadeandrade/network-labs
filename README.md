@@ -6,6 +6,12 @@ Trabalho com infraestrutura de LED e broadcast sobre redes IP na beIN MEDIA GROU
 
 ---
 
+## Apps de estudo
+
+| App | O que faz | Abrir |
+|---|---|---|
+| [**Base Clara**](base-clara/) | Conversor de decimal, binário e hexadecimal com IPv4, IPv6 e MAC, passo a passo e exercícios. Gratuito, offline e instalável no celular e no PC. | [abrir o app](https://willianbarbosadeandrade.github.io/network-labs/base-clara/) |
+
 ## Labs
 
 | # | Lab | Assuntos | Status |
@@ -27,6 +33,7 @@ O modelo usado em todos os labs está em [`_modelo/README.md`](_modelo/README.md
 
 - Cisco Packet Tracer
 - Cisco IOS (switches e roteadores simulados)
+- HTML, CSS e JavaScript nos apps de estudo
 
 ## Trilha de estudos
 

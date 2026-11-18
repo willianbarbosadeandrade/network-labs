@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#f4f7fb">
+  <meta name="description" content="Conversor e laboratório de bases numéricas: decimal, binário e hexadecimal, com IPv4, IPv6 e MAC. Gratuito e funciona offline.">
+  <meta name="author" content="Willian Barbosa">
+  <title>Base Clara · Laboratório de bases numéricas</title>
+  <link rel="icon" href="icones/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icones/apple-touch-icon.png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Base Clara">
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+  <a class="skip-link" href="#conversor">Ir para o conversor</a>
+  <header class="site-header">
+    <div class="shell header-inner">
+      <a class="brand" href="#top" aria-label="Base Clara, início">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+        <span class="brand-text">Base Clara</span>
+      </a>
+      <nav class="nav" aria-label="Seções">
+        <a href="#conversor">Conversor</a>
+        <a href="#tabelas">Tabelas</a>
+        <a href="#redes">Redes</a>
+        <a href="#exercicios">Exercícios</a>
+      </nav>
+      <label class="learning-toggle">
+        <span class="learning-label">Modo aprendizado</span><span class="learning-label-short">Aprender</span>
+        <input id="learningToggle" type="checkbox" aria-label="Modo aprendizado" checked>
+        <span class="switch" aria-hidden="true"></span>
+      </label>
+    </div>
+  </header>
+
+  <main id="top">
+    <div class="shell">
+      <section class="intro" aria-labelledby="pageTitle">
+        <h1 id="pageTitle">O mesmo número, três maneiras de enxergar.</h1>
+        <p class="intro-note"><strong>Decimal, binário e hexadecimal</strong> descrevem o mesmo valor. Aqui você acompanha cada conversão bit a bit, até conseguir fazer de cabeça.</p>
+      </section>
+
+      <section class="lab" id="conversor" aria-labelledby="converterTitle">
+        <div class="lab-top">
+          <div class="control-panel">
+            <h2 class="panel-title" id="converterTitle">Digite em qualquer base</h2>
+            <p class="panel-lead">Escolha como o valor foi escrito. As três respostas aparecem juntas. Dá para colar um IPv4, um MAC ou um IPv6 inteiro.</p>
+            <div class="base-picker" role="group" aria-label="Base da entrada">
+              <button type="button" data-base="10" aria-pressed="true">Decimal</button>
+              <button type="button" data-base="2" aria-pressed="false">Binário</button>
+              <button type="button" data-base="16" aria-pressed="false">Hexadecimal</button>
+            </div>
+            <label class="field-label" for="valueInput">Valor</label>
+            <input class="value-field" id="valueInput" value="173" inputmode="decimal" autocomplete="off" spellcheck="false" aria-describedby="inputHelp">
+            <p class="field-help" id="inputHelp">Use algarismos de 0 a 9 ou um IPv4 como 192.168.1.10.</p>
+            <div class="address-detail" id="addressDetail" hidden></div>
+            <div class="width-row">
+              <div>
+                <label class="field-label" for="widthSelect">Largura visual mínima</label>
+                <select class="select" id="widthSelect">
+                  <option value="auto">Automática, em bytes</option>
+                  <option value="8">8 bits (byte)</option>
+                  <option value="16">16 bits (hexteto)</option>
+                  <option value="32">32 bits (IPv4)</option>
+                  <option value="48">48 bits (MAC)</option>
+                  <option value="64">64 bits</option>
+                  <option value="128">128 bits (IPv6)</option>
+                </select>
+              </div>
+              <span class="width-note" id="widthNote">8 bits exibidos</span>
+            </div>
+            <div class="presets" aria-label="Exemplos rápidos">
+              <button type="button" class="chip" data-preset-base="10" data-preset-value="10">10</button>
+              <button type="button" class="chip" data-preset-base="10" data-preset-value="42">42</button>
+              <button type="button" class="chip" data-preset-base="10" data-preset-value="173">173</button>
+              <button type="button" class="chip" data-preset-base="10" data-preset-value="255">255</button>
+            </div>
+            <div class="result-stack" id="resultStack" aria-live="polite">
+              <div class="result-row current" data-result-base="10">
+                <span class="result-label">Decimal</span>
+                <span class="result-value" id="decimalResult">173</span>
+                <button type="button" class="copy-button" data-copy-target="decimalResult" aria-label="Copiar valor decimal">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"></rect><path d="M15 9V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h3"></path></svg>
+                </button>
+              </div>
+              <div class="result-row" data-result-base="2">
+                <span class="result-label">Binário</span>
+                <span class="result-value" id="binaryResult">1010 1101</span>
+                <button type="button" class="copy-button" data-copy-target="binaryResult" aria-label="Copiar valor binário">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"></rect><path d="M15 9V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h3"></path></svg>
+                </button>
+              </div>
+              <div class="result-row" data-result-base="16">
+                <span class="result-label">Hexadecimal</span>
+                <span class="result-value" id="hexResult">AD</span>
+                <button type="button" class="copy-button" data-copy-target="hexResult" aria-label="Copiar valor hexadecimal">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"></rect><path d="M15 9V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h3"></path></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="bit-stage">
+            <div class="stage-head">
+              <div><h2 class="panel-title">Trilho de bits</h2><p>Cada posição vale uma potência de 2.</p></div>
+              <div class="legend" aria-label="Legenda">
+                <span><i class="on"></i>bit ligado</span><span><i class="group"></i>grupo hexadecimal</span>
+              </div>
+            </div>
+            <div class="bit-scroll" tabindex="0" aria-label="Pesos e bits; role para os lados se necessário">
+              <div class="bit-rail" id="bitRail"></div>
+              <div class="nibble-strip" id="nibbleStrip"></div>
+            </div>
+            <div class="sum-box">
+              <span class="sum-label">Soma dos pesos ligados</span>
+              <div class="sum-equation" id="sumEquation">128 + 32 + 8 + 4 + 1 = 173</div>
+            </div>
+            <p class="stage-tip learning-detail"><b>i</b><span>Clique em qualquer bit para trocar entre 0 e 1. O número é recalculado na hora.</span></p>
+          </div>
+        </div>
+
+        <div class="method-zone learning-detail" id="methodZone">
+          <div class="section-head">
+            <div>
+              <h2>Como chegamos ao resultado</h2>
+              <p>Três caminhos complementares: dividir para construir, expandir para entender e agrupar para ler hexadecimal.</p>
+            </div>
+          </div>
+          <div class="method-tabs" role="tablist" aria-label="Métodos de conversão">
+            <button class="tab-button" type="button" role="tab" aria-selected="true" aria-controls="divisionPanel" id="divisionTab" data-method="division">Divisões sucessivas</button>
+            <button class="tab-button" type="button" role="tab" aria-selected="false" aria-controls="positionPanel" id="positionTab" data-method="position">Expansão posicional</button>
+            <button class="tab-button" type="button" role="tab" aria-selected="false" aria-controls="groupPanel" id="groupTab" data-method="group">Grupos de 4 bits</button>
+          </div>
+          <div class="method-panel" id="divisionPanel" role="tabpanel" aria-labelledby="divisionTab">
+            <p class="method-intro"><span><strong>Regra:</strong> divida o decimal pela nova base, anote cada resto e leia os restos de baixo para cima.</span></p>
+            <div class="two-methods">
+              <article class="method-card">
+                <h3>Decimal → binário: dividir por 2</h3>
+                <div class="table-scroll step-scroll"><table><thead><tr><th>Dividendo</th><th>Quociente</th><th>Resto</th></tr></thead><tbody id="division2Body"></tbody></table></div>
+                <div class="method-result" id="division2Result"></div>
+              </article>
+              <article class="method-card">
+                <h3>Decimal → hexadecimal: dividir por 16</h3>
+                <div class="table-scroll step-scroll"><table><thead><tr><th>Dividendo</th><th>Quociente</th><th>Resto</th></tr></thead><tbody id="division16Body"></tbody></table></div>
+                <div class="method-result" id="division16Result"></div>
+              </article>
+            </div>
+          </div>
+          <div class="method-panel" id="positionPanel" role="tabpanel" aria-labelledby="positionTab" hidden>
+            <p class="method-intro"><span><strong>Regra:</strong> multiplique cada algarismo pelo peso da posição. A posição mais à direita sempre começa no expoente zero.</span></p>
+            <div class="two-methods">
+              <article class="method-card">
+                <h3>Binário → decimal: potências de 2</h3>
+                <div class="table-scroll step-scroll"><table><thead><tr><th>Bit</th><th>Posição</th><th>Peso</th><th>Contribuição</th></tr></thead><tbody id="binaryExpansionBody"></tbody></table></div>
+                <div class="expansion-summary" id="binaryExpansionSummary"></div>
+              </article>
+              <article class="method-card">
+                <h3>Hexadecimal → decimal: potências de 16</h3>
+                <div class="table-scroll step-scroll"><table><thead><tr><th>Dígito</th><th>Valor</th><th>Posição</th><th>Contribuição</th></tr></thead><tbody id="hexExpansionBody"></tbody></table></div>
+                <div class="expansion-summary" id="hexExpansionSummary"></div>
+              </article>
+            </div>
+          </div>
+          <div class="method-panel" id="groupPanel" role="tabpanel" aria-labelledby="groupTab" hidden>
+            <p class="method-intro"><span><strong>Regra:</strong> comece pela direita e separe em grupos de 4 bits. Complete apenas o grupo da esquerda com zeros, se precisar.</span></p>
+            <div class="group-explainer" id="groupExplainer"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="content-section learning-detail" id="tabelas" aria-labelledby="tablesTitle">
+        <div class="section-head"><div>
+          <h2 id="tablesTitle">Tabelas para reconhecer padrões</h2>
+          <p>Os 16 símbolos hexadecimais cabem em 4 bits. Dois símbolos formam um byte inteiro, de <code>00</code> a <code>FF</code>.</p>
+        </div></div>
+        <div class="reference-layout">
+          <article class="reference-card">
+            <div class="reference-card-head"><div><h3>De 0 a F</h3><p>Um nibble: 4 bits, 16 combinações</p></div></div>
+            <div class="table-scroll">
+              <table class="hex-table"><thead><tr><th>Decimal</th><th>Binário</th><th>Hex</th><th>Leitura</th></tr></thead><tbody id="hexReferenceBody"></tbody></table>
+            </div>
+          </article>
+          <article class="reference-card">
+            <div class="reference-card-head"><div><h3>De 00 a FF</h3><p>Linha = nibble alto; coluna = nibble baixo</p></div></div>
+            <div class="byte-tools">
+              <input class="search-field" id="byteSearch" placeholder="Buscar: 0xAD, 173 ou 0b10101101" aria-label="Buscar na tabela de bytes">
+              <button class="soft-button" type="button" id="clearByteSearch">Limpar</button>
+            </div>
+            <div class="byte-detail" id="byteDetail">Selecione uma célula para ver o byte nas três bases.</div>
+            <div class="byte-matrix-wrap" tabindex="0" aria-label="Tabela rolável de 00 a FF">
+              <table class="byte-matrix" id="byteMatrix"></table>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="content-section learning-detail" id="redes" aria-labelledby="networksTitle">
+        <div class="section-head"><div>
+          <h2 id="networksTitle">O que muda em IPv4, IPv6 e MAC?</h2>
+          <p>A matemática é a mesma. O que muda é a largura de cada bloco e a forma escolhida para escrevê-lo.</p>
+        </div></div>
+        <div class="network-board">
+          <div class="network-tabs" role="tablist" aria-label="Exemplos de rede">
+            <button type="button" class="network-tab" role="tab" aria-selected="true" aria-controls="ipv4Panel" id="ipv4Tab" data-network="ipv4">IPv4</button>
+            <button type="button" class="network-tab" role="tab" aria-selected="false" aria-controls="ipv6Panel" id="ipv6Tab" data-network="ipv6">IPv6</button>
+            <button type="button" class="network-tab" role="tab" aria-selected="false" aria-controls="macPanel" id="macTab" data-network="mac">MAC Ethernet</button>
+          </div>
+          <div class="network-panel" id="ipv4Panel" role="tabpanel" aria-labelledby="ipv4Tab">
+            <div class="network-grid">
+              <div class="network-copy">
+                <h3>IPv4 usa quatro octetos decimais</h3>
+                <p>Cada bloco tem 8 bits. Com 8 bits existem 256 combinações, por isso os valores vão de <strong>0 a 255</strong>.</p>
+                <div class="network-fact"><span>💡</span><span><strong>256 combinações não significa valor 256.</strong> Como a contagem começa em zero, o último valor é 255.</span></div>
+                <button class="action-button load-network" type="button" data-network-load="ipv4">Levar o IPv4 ao conversor</button>
+              </div>
+              <div>
+                <div class="address-line" id="ipv4Address"></div>
+                <div class="address-table table-scroll"><table><thead><tr><th>Octeto</th><th>Decimal</th><th>Binário (8 bits)</th><th>Hex</th></tr></thead><tbody id="ipv4Body"></tbody></table></div>
+              </div>
+            </div>
+          </div>
+          <div class="network-panel" id="ipv6Panel" role="tabpanel" aria-labelledby="ipv6Tab" hidden>
+            <div class="network-grid">
+              <div class="network-copy">
+                <h3>IPv6 usa oito hextetos</h3>
+                <p>Cada bloco tem 4 dígitos hexadecimais, ou 16 bits. O endereço completo soma <strong>128 bits</strong>.</p>
+                <div class="network-fact"><span>💡</span><span><strong>O limite 255 não vale aqui.</strong> Um hexteto vai de <code>0000</code> a <code>FFFF</code>, isto é, de 0 a 65.535.</span></div>
+                <button class="action-button load-network" type="button" data-network-load="ipv6">Levar o IPv6 ao conversor</button>
+              </div>
+              <div>
+                <div class="address-line" id="ipv6Address"></div>
+                <div class="address-table table-scroll"><table><thead><tr><th>Hexteto</th><th>Binário (16 bits)</th><th>Decimal</th></tr></thead><tbody id="ipv6Body"></tbody></table></div>
+                <p class="panel-lead"><strong>Forma comprimida:</strong> <code>2001:db8::ff00:42:8329</code>. O <code>::</code> substitui uma sequência de blocos zero e só pode aparecer uma vez.</p>
+              </div>
+            </div>
+          </div>
+          <div class="network-panel" id="macPanel" role="tabpanel" aria-labelledby="macTab" hidden>
+            <div class="network-grid">
+              <div class="network-copy">
+                <h3>MAC usa seis octetos hexadecimais</h3>
+                <p>Cada par hexadecimal representa os mesmos 8 bits de um byte. Seis pares formam um endereço de <strong>48 bits</strong>.</p>
+                <div class="network-fact"><span>💡</span><span><strong>Hexadecimal não é outra eletricidade.</strong> É só uma escrita mais curta para os bits: <code>1A</code> e <code>00011010</code> representam o mesmo valor.</span></div>
+                <button class="action-button load-network" type="button" data-network-load="mac">Levar o MAC ao conversor</button>
+              </div>
+              <div>
+                <div class="address-line" id="macAddress"></div>
+                <div class="address-table table-scroll"><table><thead><tr><th>Octeto</th><th>Hex</th><th>Binário (8 bits)</th><th>Decimal</th></tr></thead><tbody id="macBody"></tbody></table></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="content-section" id="exercicios" aria-labelledby="exercisesTitle">
+        <div class="section-head"><div>
+          <h2 id="exercisesTitle">Oficina de exercícios</h2>
+          <p>Tente antes de revelar. Quando errar, a resposta explica onde o raciocínio desviou, não só que está errado.</p>
+        </div></div>
+        <div class="exercise-board">
+          <aside class="exercise-side">
+            <h3>Seu ritmo</h3><p>Os exercícios misturam conversão, pesos e situações de rede.</p>
+            <div class="score-grid">
+              <div class="score-box"><span>Acertos</span><strong id="correctCount">0</strong></div>
+              <div class="score-box"><span>Sequência</span><strong id="streakCount">0</strong></div>
+            </div>
+          </aside>
+          <div class="exercise-main">
+            <div class="exercise-meta">
+              <span class="question-kind" id="questionKind">Decimal → binário</span>
+              <button class="soft-button" type="button" id="newQuestion">Nova questão</button>
+            </div>
+            <h3 class="exercise-question" id="exerciseQuestion">Como <code>42₁₀</code> fica em binário?</h3>
+            <form id="exerciseForm">
+              <div class="answer-row">
+                <input class="answer-field" id="answerInput" autocomplete="off" spellcheck="false" aria-label="Sua resposta">
+                <button class="action-button" type="submit">Verificar resposta</button>
+              </div>
+              <div class="exercise-actions">
+                <button class="soft-button learning-detail" type="button" id="hintButton">Dar uma pista</button>
+                <button class="soft-button learning-detail" type="button" id="revealButton">Mostrar solução</button>
+              </div>
+            </form>
+            <div class="feedback" id="exerciseFeedback" aria-live="polite">Escreva sua resposta e verifique quando estiver pronto.</div>
+          </div>
+        </div>
+        <div class="offline-note">
+          <div class="offline-icon" aria-hidden="true">✓</div>
+          <div><strong>Funciona sem internet.</strong><br>Nada de fontes, bibliotecas ou servidores externos, e nenhum valor digitado sai do seu aparelho.</div>
+        </div>
+        <div class="install-box" id="instalar">
+          <div class="install-icon" aria-hidden="true">↓</div>
+          <div>
+            <strong>Instale como app, de graça.</strong> Depois de instalado, abre direto da tela inicial, mesmo offline.
+            <ul>
+              <li><strong>Android, Windows, Linux e Mac (Chrome ou Edge):</strong> use o botão abaixo ou o ícone de instalar na barra de endereço.</li>
+              <li><strong>iPhone e iPad (Safari):</strong> toque em Compartilhar e depois em Adicionar à Tela de Início.</li>
+              <li><strong>Mac (Safari):</strong> menu Arquivo, Adicionar ao Dock.</li>
+            </ul>
+            <button class="action-button" type="button" id="installButton" hidden>Instalar Base Clara</button>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+  <footer>
+    <div class="shell footer-line">
+      <span>Base Clara, feito por <a href="https://www.linkedin.com/in/willian-barbosa-de-andrade-31a068226" target="_blank" rel="noopener">Willian Barbosa</a> · <a href="https://github.com/willianbarbosadeandrade/network-labs" target="_blank" rel="noopener">código no GitHub</a></span>
+      <span>Versão 1.1 · decimal, binário e hexadecimal</span>
+    </div>
+  </footer>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="js/conversao.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
